@@ -1,0 +1,5 @@
+{
+  "generator-e2e": {
+    "cypress": true
+  }
+}

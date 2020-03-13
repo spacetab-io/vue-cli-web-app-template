@@ -1,0 +1,13 @@
+{
+    "globals": {
+        "Cypress": "readonly",
+        "cy": "readonly",
+        "assert": "readonly"
+    },
+    "rules": {
+        "spaced-comment": "off"
+    },
+    "env": {
+        "jest": true
+    }
+}

@@ -1,0 +1,40 @@
+{
+  "root": true,
+  "extends": [
+    "@spacetabs/eslint-config-spacetab-io"
+  ],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./",
+    "extraFileExtensions": [".js.vue", ".vue"]
+  },
+  "env": {
+    "es6": true,
+    "amd": true,
+    "node": true,
+    "commonjs": true,
+    "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": "webpack.base.js"
+    }
+  },
+  "globals": {
+    "__config": "readonly",
+    "__stage": "readonly",
+    "__vcs": "readonly",
+    "VERSION": "readonly"
+  },
+  "overrides": [
+    {
+      "files": ["src/store/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/typedef": "off"
+      }
+    }
+  ]
+}

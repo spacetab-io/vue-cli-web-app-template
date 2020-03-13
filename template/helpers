@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+white_text='\033[0;1m'
+green_bg_text='\e[48;5;022m'
+white_on_green="${white_text}${green_bg_text}";
+
+parameter_git_add=0;
+
+for i in "$@"; do
+    case "$i" in
+        "--git-add") parameter_git_add=1;
+    esac;
+
+COMMAND=$1;
+done;
+BASE_PATH=$PWD;
+ROOT_PATH="$(cd "$(dirname "$0")"; pwd)/";
+cd "$ROOT_PATH";
+
+if [ -z "$COMMAND" ]; then
+    echo "No argument with function name.";
+fi;
+
+function spinal_to_upper {
+    echo $1 | sed -r 's/(^|-)([a-z])/\U\2/g';
+}
+
+function replace_slash_with_dash {
+    STRING_TO_REPLACE=$1;
+    echo "${STRING_TO_REPLACE////-}";
+}
+
+function lowercase_first_letter {
+    local STRING_TO_REPLACE=$1;
+    echo "$(tr '[:upper:]' '[:lower:]' <<< ${STRING_TO_REPLACE:0:1})${STRING_TO_REPLACE:1}";
+}
+
+function create_file_with_contents {
+    PATH_TO_FILE=$1;
+    CONTENTS=$2;
+
+    echo -e "${CONTENTS}" > "$PATH_TO_FILE";
+    echo -e "${white_on_green}file created${normal} ${PATH_TO_FILE}"
+}
+
+function add_file_to_git {
+    $(git add $1)
+    echo -e "${white_on_green}added to git${normal} ${1}"
+}
+
+function create_store_module {
+    local MODULE_NAME=$1;
+    local MODULE_PATH="${ROOT_PATH}src/store/modules/${MODULE_NAME}";
+
+    local VALID_MODULE_NAME=$(replace_slash_with_dash "$MODULE_NAME")
+    local CAMEL_MODULE_NAME=$(spinal_to_upper "$VALID_MODULE_NAME")
+    local STORE_MODULE_NAME=$(lowercase_first_letter "$CAMEL_MODULE_NAME")
+    local MODULE_STATE_INTERFACE_NAME="${CAMEL_MODULE_NAME}Store"
+    local SRC_MODULE_PATH="@/store/modules/$MODULE_NAME"
+    local TYPES_ENUM_NAME="${CAMEL_MODULE_NAME}MutationTypesEnum"
+
+    local INDEX_CONTENT="import { actions } from './actions';\nimport { getters } from './getters';\nimport { mutations } from './mutations';\nimport { state } from './state';\nimport { Module } from 'vuex';\nimport { $MODULE_STATE_INTERFACE_NAME } from '$SRC_MODULE_PATH/types'\nimport { RootState } from '@/store/types';\n\nexport const $STORE_MODULE_NAME: Module<$MODULE_STATE_INTERFACE_NAME, RootState> = {\n  namespaced: true,\n  actions,\n  getters,\n  mutations,\n  state,\n};";
+    local ACTIONS_CONTENT="import { $TYPES_ENUM_NAME } from './mutation-types';\nimport { ActionTree } from 'vuex';\nimport { $MODULE_STATE_INTERFACE_NAME } from '$SRC_MODULE_PATH/types';\nimport { RootState } from '@/store/types';\n\nexport const actions: ActionTree<$MODULE_STATE_INTERFACE_NAME, RootState> = {};";
+    local GETTERS_CONTENT="import { GetterTree } from 'vuex';\n\nimport { RootState } from '@/store/types';\nimport { $MODULE_STATE_INTERFACE_NAME } from '$SRC_MODULE_PATH/types';\n\nexport const getters: GetterTree<$MODULE_STATE_INTERFACE_NAME, IRootState> = {};";
+    local MUTATIONS_CONTENT="import { $TYPES_ENUM_NAME } from './mutation-types';\nimport { MutationTree } from 'vuex';\nimport { $MODULE_STATE_INTERFACE_NAME } from '$SRC_MODULE_PATH/types';\n\nexport const mutations: MutationTree<$MODULE_STATE_INTERFACE_NAME> = {};";
+    local MUTATION_TYPES_CONTENT="export enum $TYPES_ENUM_NAME {}";
+    local STATE_CONTENT="import { $MODULE_STATE_INTERFACE_NAME } from '$SRC_MODULE_PATH/types';\n\nexport const state: $MODULE_STATE_INTERFACE_NAME = {};";
+    local TYPES_CONTENT="export interface $MODULE_STATE_INTERFACE_NAME {}"
+
+    mkdir -p "$MODULE_PATH";
+
+    local INDEX_FILE_PATH="${MODULE_PATH}/index.ts";
+    local ACTIONS_FILE_PATH="${MODULE_PATH}/actions.ts";
+    local GETTERS_FILE_PATH="${MODULE_PATH}/getters.ts";
+    local MUTATIONS_FILE_PATH="${MODULE_PATH}/mutations.ts";
+    local MUTATION_TYPES_FILE_PATH="${MODULE_PATH}/mutation-types.ts";
+    local STATE_FILE_PATH="${MODULE_PATH}/state.ts";
+    local TYPES_FILE_PATH="${MODULE_PATH}/types.ts";
+
+    create_file_with_contents "$INDEX_FILE_PATH" "$INDEX_CONTENT";
+    create_file_with_contents "$ACTIONS_FILE_PATH" "$ACTIONS_CONTENT";
+    create_file_with_contents "$GETTERS_FILE_PATH" "$GETTERS_CONTENT";
+    create_file_with_contents "$MUTATIONS_FILE_PATH" "$MUTATIONS_CONTENT";
+    create_file_with_contents "$MUTATION_TYPES_FILE_PATH" "$MUTATION_TYPES_CONTENT";
+    create_file_with_contents "$STATE_FILE_PATH" "$STATE_CONTENT";
+    create_file_with_contents "$TYPES_FILE_PATH" "$TYPES_CONTENT";
+
+    if [[ "$parameter_git_add" == 1 ]]; then
+        add_file_to_git "$INDEX_FILE_PATH";
+        add_file_to_git "$ACTIONS_FILE_PATH";
+        add_file_to_git "$GETTERS_FILE_PATH";
+        add_file_to_git "$MUTATIONS_FILE_PATH";
+        add_file_to_git "$MUTATION_TYPES_FILE_PATH";
+        add_file_to_git "$STATE_FILE_PATH";
+        add_file_to_git "$TYPES_FILE_PATH";
+    fi;
+}
+
+"$COMMAND" "$2";

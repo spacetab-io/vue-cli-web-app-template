@@ -1,0 +1,16 @@
+#[staging]
+> 1%
+last 2 versions
+not ie > 0
+not ie_mob > 0
+not op_mini all
+not op_mob > 0
+not and_qq > 0
+not and_uc > 0
+not baidu > 0
+not android < 60
+not samsung < 6
+not dead
+
+#[production development]
+last 2 chrome versions

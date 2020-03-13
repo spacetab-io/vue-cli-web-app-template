@@ -1,0 +1,10 @@
+/cypress/cucumber-json/
+/cypress/videos/
+/cypress/screenshots/
+/cypress/integration/packages/__image_snapshots__/
+/cypress/logs/
+cypress/fixtures/*/*.json
+cypress/fixtures/*/activation-link
+cypress.local.json/
+/.bit
+.bitmap

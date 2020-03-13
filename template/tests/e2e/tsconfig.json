@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./node_modules",
+    "module": "commonjs",
+    "target": "ES6",
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "moduleResolution": "node",
+    "strict": true,
+    "types": [
+      "cypress",
+      "node",
+      "chance",
+      "cypress-pipe",
+      "cypress-plugin-snapshots",
+      "cucumber-html-reporter",
+      "@types/testing-library__cypress"
+    ],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "files": [
+    "./node_modules/cypress-plugin-snapshots/types/index.d.ts"
+  ],
+  "include": [
+    "**/*.ts",
+    "./node_modules/cypress"
+  ]
+}

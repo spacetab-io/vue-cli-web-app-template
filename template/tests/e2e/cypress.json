@@ -1,0 +1,30 @@
+{
+  "baseUrl": "{{tests_baseUrl}}",
+  "testFiles": "**/*.{feature,features}",
+  "ignoreTestFiles": [
+    "*.js",
+    "*.md",
+    "*wip.js",
+    "*wip.feature",
+    "en.feature",
+    "ru.feature",
+    "*wip.features",
+    "*js.map",
+    "*.ts",
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ],
+  "chromeWebSecurity": false,
+  "screenshotsFolder": "cypress/integration/packages/__image_snapshots__",
+  "trashAssetsBeforeRuns": true,
+  "watchForFileChanges": false,
+  "browser": "chrome",
+  "waitForAnimations": false,
+  "numTestsKeptInMemory": 60,
+  "viewportWidth": 1440,
+  "viewportHeight": 900,
+  "supportFile": "cypress/support/index.ts",
+  "videoUploadOnPasses": false,
+  "port": 9222,
+  "projectId": "enzdsy"
+}
