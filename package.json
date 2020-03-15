@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/spacetab-io/vue-cli-web-app-template/issues"
   },
-  "homepage": "https://github.com/spacetab-io/vue-cli-web-app-template#readme"
+  "homepage": "https://github.com/spacetab-io/vue-cli-web-app-template#readme",
+  "dependencies": {
+    "@types/webpack-env": "^1.15.1"
+  }
 }

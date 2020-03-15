@@ -59,7 +59,6 @@ module.exports = {
     // Local icons
     'src/components/icons/**/*': 'need_localIcons',
     'src/assets/icons/**/*': 'need_localIcons',
-    'utils/icon-list-generator/**/*': 'need_localIcons',
 
     // Locales
     'src/locales/**/*': 'need_i18n',
