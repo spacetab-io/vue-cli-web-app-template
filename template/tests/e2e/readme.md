@@ -1,4 +1,4 @@
-# tmc24 e2e
+# e2e
 
 ## Install
 
@@ -22,15 +22,17 @@ Go to `e2e` folder and run:
 
   - with record in dashboard:
 
-            npm test -- --record --key ca33c2b7-a4cf-47ba-bbd4-7ccf998e2bbe
+            npm test -- --record --key <GENERATED_KEY>
 
-     ![Run Url](cypress/assets/run-out-example.png)
+  - run single spec:
+  
+            npm test -- --spec <RELATIVE_PATH> 
 
 ## Develope Mode
 
 Develop tests for `npm test` command with [Test Runner](https://docs.cypress.io/guides/core-concepts/test-runner.html#Overview):
 
-    npm run open:test
+    npm run dev
 
 ## Project Structure
 
@@ -41,30 +43,15 @@ Develop tests for `npm test` command with [Test Runner](https://docs.cypress.io/
     │  ├─ fixtures
     │  ├─ integration
     │  │  ├─ packages
-    │  │  │  └─ readme.md
     │  ├─ pages?
     │  ├─ plugins
     │  ├─ screenshots
     │  ├─ support
-    │  │  └─ step_definitions
     │  └─ videos
     ├─ cypress.env.json
     ├─ cypress.json
 
 ```
 
-## Accessibility
 
-    About Cypress Custom Attributes
 
-## Dashboard Access
-
-    Create account for cypress dashboard
-
-## Test Automation Agile
-
-    Short instructions about test managemant and workflow
-
-## TODO
-
-1. Create account for cypress dashboard;

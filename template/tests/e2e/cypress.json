@@ -25,6 +25,5 @@
   "viewportHeight": 900,
   "supportFile": "cypress/support/index.ts",
   "videoUploadOnPasses": false,
-  "port": 9222,
-  "projectId": "enzdsy"
+  "port": 9222
 }
