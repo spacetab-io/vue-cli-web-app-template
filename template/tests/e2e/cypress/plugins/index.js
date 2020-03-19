@@ -2,7 +2,6 @@
 const cucumber = require('cypress-cucumber-preprocessor').default;
 const browserify = require('@cypress/browserify-preprocessor');
 const { initPlugin } = require('cypress-plugin-snapshots/plugin');
-const { getConfig } = require('./snapshots');
 
 
 module.exports = (on, config) => {
